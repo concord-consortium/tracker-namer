@@ -1,0 +1,28 @@
+<widget id="org.concord.tracker-namer" version="0.0.1" xmlns="http://www.w3.org/ns/widgets" xmlns:cdv="http://cordova.apache.org/ns/1.0">
+    <name>TrackerNamer</name>
+    <description>
+        An app to automatically name the Watershed Tracker devices
+    </description>
+    <author email="scytacki@concord.org" href="http://concord.org">
+        Apache Cordova Team
+    </author>
+    <content src="index.html" />
+    <!-- Whitelist configuration. Refer to https://cordova.apache.org/docs/en/edge/guide_appdev_whitelist_index.md.html -->
+    <plugin name="cordova-plugin-whitelist" spec="1" />
+    <access origin="*" />
+    <allow-intent href="http://*/*" />
+    <allow-intent href="https://*/*" />
+    <allow-intent href="tel:*" />
+    <allow-intent href="sms:*" />
+    <allow-intent href="mailto:*" />
+    <allow-intent href="geo:*" />
+    <platform name="android">
+        <allow-intent href="market:*" />
+    </platform>
+    <platform name="ios">
+        <allow-intent href="itms:*" />
+        <allow-intent href="itms-apps:*" />
+    </platform>
+
+    <gap:plugin name="com.megster.cordova.rfduino" version="0.1.0" />
+</widget>

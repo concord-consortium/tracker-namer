@@ -34,6 +34,11 @@ var app = {
     // function, we must explicitly call 'app.receivedEvent(...);'
     onDeviceReady: function() {
         app.receivedEvent('deviceready');
+        app.deviceList = document.getElementById("deviceList");
+
+        rfduino.discover(3, function(device) {
+          console.log(JSON.stringify(device));
+        }, failure);
     },
     // Update DOM on a Received Event
     receivedEvent: function(id) {
@@ -45,6 +50,22 @@ var app = {
         receivedElement.setAttribute('style', 'display:block;');
 
         console.log('Received Event: ' + id);
+    },
+    refreshDeviceList: function() {
+
+        app.deviceList.innerHTML = ''; // empties the list
+        rfduino.discover(5, app.onDiscoverDevice, app.onError);
+    },
+    onDiscoverDevice: function(device) {
+        var listItem = document.createElement('li'),
+            html = '<b>' + device.name + '</b><br/>' +
+                device.uuid;
+        listItem.setAttribute('uuid', device.uuid);
+        listItem.innerHTML = html;
+        app.deviceList.appendChild(listItem);
+    },
+    onError: function(error) {
+        // something went wrong (deal with it)
     }
 };
 
