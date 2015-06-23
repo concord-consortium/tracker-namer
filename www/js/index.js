@@ -58,11 +58,10 @@ var app = {
     updateNames2: function() {
         app.currentDeviceId = app.deviceIds.pop();
         rfduino.connect(app.currentDeviceId, function (){
-          var data = new ArrayBuffer(6);
-          uint8Data = new Uint8Array(data)
           encoder = new TextEncoder("utf-8");
-          uint8Data.set(encoder.encode("ncats"));
-          rfduino.write(data, function (){
+          var customName = app.currentDeviceId.slice(-5);
+          var command = "n" + customName;
+          rfduino.write(encoder.encode(command), function (){
             rfduino.disconnect(function (){
               app.updateNames2();
             }, app.onError);
