@@ -61,7 +61,7 @@ var app = {
           encoder = new TextEncoder("utf-8");
           var customName = app.currentDeviceId.slice(-5);
           var command = "n" + customName;
-          rfduino.write(encoder.encode(command), function (){
+          rfduino.write(encoder.encode(command).buffer, function (){
             rfduino.disconnect(function (){
               app.updateNames2();
             }, app.onError);
