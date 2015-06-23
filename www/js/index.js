@@ -39,7 +39,7 @@ var app = {
         app.refreshDeviceList();
 
         app.refreshButton.addEventListener("click", app.refreshDeviceList);
-        app.updateNamesButton("click", app.updateNames);
+        app.updateNamesButton.addEventListener("click", app.updateNames);
     },
     refreshDeviceList: function() {
 
@@ -56,15 +56,16 @@ var app = {
         }, app.onError);
     },
     updateNames2: function() {
-        app.currentDeviceId = app.DeviceIds.pop();
+        app.currentDeviceId = app.deviceIds.pop();
         rfduino.connect(app.currentDeviceId, function (){
           var data = new ArrayBuffer(6);
           uint8Data = new Uint8Array(data)
           encoder = new TextEncoder("utf-8");
           uint8Data.set(encoder.encode("ncats"));
           rfduino.write(data, function (){
-            rfduino.disconnect();
-            app.updateNames2();
+            rfduino.disconnect(function (){
+              app.updateNames2();
+            }, app.onError);
           }, app.onError);
         }, app.onError);
     },
@@ -77,7 +78,7 @@ var app = {
         app.deviceList.appendChild(listItem);
     },
     onError: function(error) {
-        // something went wrong (deal with it)
+        console.log(error);
     }
 };
 
