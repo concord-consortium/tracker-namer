@@ -2,7 +2,7 @@
     xmlns="http://www.w3.org/ns/widgets"
     xmlns:cdv="http://cordova.apache.org/ns/1.0"
     xmlns:gap="http://phonegap.com/ns/1.0">
-    <name>TrackerNamer</name>
+    <name>Tracker Namer</name>
     <description>
         An app to automatically name the Watershed Tracker devices
     </description>
@@ -26,6 +26,11 @@
         <allow-intent href="itms:*" />
         <allow-intent href="itms-apps:*" />
     </platform>
+
+    <feature name="debug-server" required="true">
+      <param name="domain" value="http://192.168.1.127:8080"/>
+      <param name="key" value="tracker-debugger"/>
+    </feature>
 
     <gap:plugin name="com.megster.cordova.rfduino" version="0.1.0" />
 </widget>
