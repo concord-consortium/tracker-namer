@@ -36,9 +36,7 @@ var app = {
         app.receivedEvent('deviceready');
         app.deviceList = document.getElementById("deviceList");
 
-        rfduino.discover(3, function(device) {
-          console.log(JSON.stringify(device));
-        }, failure);
+        app.refreshDeviceList();
     },
     // Update DOM on a Received Event
     receivedEvent: function(id) {
