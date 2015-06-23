@@ -35,14 +35,38 @@ var app = {
     onDeviceReady: function() {
         app.deviceList = document.getElementById("deviceList");
         app.refreshButton = document.getElementById("refreshButton");
+        app.updateNamesButton = document.getElementById("updateNames");
         app.refreshDeviceList();
 
         app.refreshButton.addEventListener("click", app.refreshDeviceList);
+        app.updateNamesButton("click", app.updateNames);
     },
     refreshDeviceList: function() {
 
         app.deviceList.innerHTML = ''; // empties the list
         rfduino.discover(5, app.onDiscoverDevice, app.onError);
+    },
+    updateNames: function() {
+        app.deviceIds = [];
+        rfduino.list(function(devices) {
+          devices.forEach(function(device) {
+            app.deviceIds.push(device.uuid);
+          });
+          app.updateNames2();
+        }, app.onError);
+    },
+    updateNames2: function() {
+        app.currentDeviceId = app.DeviceIds.pop();
+        rfduino.connect(app.currentDeviceId, function (){
+          var data = new ArrayBuffer(6);
+          uint8Data = new Uint8Array(data)
+          encoder = new TextEncoder("utf-8");
+          uint8Data.set(encoder.encode("ncats"));
+          rfduino.write(data, function (){
+            rfduino.disconnect();
+            app.updateNames2();
+          }, app.onError);
+        }, app.onError);
     },
     onDiscoverDevice: function(device) {
         var listItem = document.createElement('li'),
