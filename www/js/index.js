@@ -61,7 +61,7 @@ var app = {
         }
         app.currentDeviceId = app.deviceIds.pop();
         rfduino.connect(app.currentDeviceId, function (){
-          setTimeout(app.updateName3, 2000);
+          setTimeout(app.updateName3, 500);
         }, app.onError);
     },
     updateName3: function(){
@@ -72,7 +72,7 @@ var app = {
       rfduino.write(encoder.encode(command).buffer, function (){
         console.log(" disconnecting");
         rfduino.disconnect(function (){
-          setTimeout(app.updateNames2, 1000);
+          setTimeout(app.updateNames2, 500);
         }, app.onError);
       }, app.onError);
     },
