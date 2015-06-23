@@ -56,6 +56,9 @@ var app = {
         }, app.onError);
     },
     updateNames2: function() {
+        if(app.deviceIds.length == 0){
+            return
+        }
         app.currentDeviceId = app.deviceIds.pop();
         rfduino.connect(app.currentDeviceId, function (){
           encoder = new TextEncoder("utf-8");
