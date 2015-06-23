@@ -61,15 +61,20 @@ var app = {
         }
         app.currentDeviceId = app.deviceIds.pop();
         rfduino.connect(app.currentDeviceId, function (){
-          encoder = new TextEncoder("utf-8");
-          var customName = app.currentDeviceId.slice(-5);
-          var command = "n" + customName;
-          rfduino.write(encoder.encode(command).buffer, function (){
-            rfduino.disconnect(function (){
-              app.updateNames2();
-            }, app.onError);
-          }, app.onError);
+          setTimeout(app.updateName3, 100);
         }, app.onError);
+    },
+    updateName3: function(){
+      console.log("updating: " + app.currentDeviceId);
+      var encoder = new TextEncoder("utf-8");
+      var customName = app.currentDeviceId.slice(-5);
+      var command = "n" + customName;
+      rfduino.write(encoder.encode(command).buffer, function (){
+        console.log(" disconnecting");
+        rfduino.disconnect(function (){
+          setTimeout(app.updateNames2, 100);
+        }, app.onError);
+      }, app.onError);
     },
     onDiscoverDevice: function(device) {
         var listItem = document.createElement('li'),
