@@ -34,8 +34,10 @@ var app = {
     // function, we must explicitly call 'app.receivedEvent(...);'
     onDeviceReady: function() {
         app.deviceList = document.getElementById("deviceList");
-
+        app.refreshButton = document.getElementById("refreshButton");
         app.refreshDeviceList();
+
+        app.refreshButton.addEventListener("click", app.refreshDeviceList);
     },
     refreshDeviceList: function() {
 
