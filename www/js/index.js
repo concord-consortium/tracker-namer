@@ -90,7 +90,7 @@ var app = {
         // not be finished writting yet, so instead of disconnecting immediately,
         // wait a bit
         app.log("write returned");
-        setTimeout(disconnectAndContinue, 500);
+        setTimeout(app.disconnectAndContinue, 500);
       }, app.onError);
     },
     disconnectAndContinue: function () {
@@ -109,7 +109,7 @@ var app = {
         app.deviceList.appendChild(listItem);
     },
     onError: function(error) {
-        app.log(error);
+        app.log("ERR: " + error);
     }
 };
 
