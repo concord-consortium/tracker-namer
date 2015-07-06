@@ -78,7 +78,7 @@ var app = {
             // no more devices to process
             app.log("finished, refreshing list");
             // give it a bit more time before refreshing
-            setTimeout(app.refreshDeviceList, 400);
+            setTimeout(app.refreshDeviceList, 800);
             return;
         }
         app.currentDeviceId = app.deviceIds.pop();
@@ -105,7 +105,7 @@ var app = {
     },
     onDiscoverDevice: function(device) {
         var listItem = document.createElement('li'),
-            html = '<b>' + device.name + '</b><br/>' +
+            html = '<b>Name: ' + device.name + '</b> Data: ' + device.advertising + '<br/>' +
                 device.uuid;
         listItem.setAttribute('uuid', device.uuid);
         listItem.innerHTML = html;
