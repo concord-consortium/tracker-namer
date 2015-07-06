@@ -77,7 +77,8 @@ var app = {
         if(app.deviceIds.length == 0){
             // no more devices to process
             app.log("finished, refreshing list");
-            app.refreshDeviceList();
+            // give it a bit more time before refreshing
+            setTimeout(app.refreshDeviceList, 200);
             return;
         }
         app.currentDeviceId = app.deviceIds.pop();
