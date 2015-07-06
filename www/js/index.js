@@ -65,13 +65,19 @@ var app = {
           devices.forEach(function(device) {
             app.deviceIds.push(device.uuid);
           });
+          if(app.deviceIds.length == 0){
+            // should log to screen that no devices found
+            app.log("no devices found");
+            return;
+          }
           app.connectToNextDevice();
         }, app.onError);
     },
     connectToNextDevice: function() {
         if(app.deviceIds.length == 0){
-            // should log to screen that no devices found
-            app.log("no devices found");
+            // no more devices to process
+            app.log("finished, refreshing list");
+            app.refreshDeviceList();
             return;
         }
         app.currentDeviceId = app.deviceIds.pop();
@@ -86,10 +92,6 @@ var app = {
       var customName = app.currentDeviceId.slice(-5);
       var command = "n" + customName;
       rfduino.write(encoder.encode(command).buffer, function (){
-        // in this library write returns immediately but it might
-        // not be finished writting yet, so instead of disconnecting immediately,
-        // wait a bit
-        app.log("write returned");
         setTimeout(app.disconnectAndContinue, 500);
       }, app.onError);
     },
@@ -97,7 +99,7 @@ var app = {
         app.log("disconnecting");
         rfduino.disconnect(function (){
           // give a little bit of time to disconnect
-          setTimeout(app.connectToNextDevice, 10);
+          setTimeout(app.connectToNextDevice, 100);
         }, app.onError);
     },
     onDiscoverDevice: function(device) {
