@@ -87,12 +87,18 @@ var app = {
           setTimeout(app.writeNameToDevice, 100);
         }, app.onError);
     },
+    encodeString: function (string) {
+        var array = new Uint8Array(string.length);
+        for (var i=0, len=string.length; i<len; i++) {
+          array[i] = string.charCodeAt(i);
+        }
+        return array.buffer;
+    },
     writeNameToDevice: function(){
       app.log("updating: " + app.currentDeviceId);
-      var encoder = new TextEncoder("utf-8");
       var customName = app.currentDeviceId.slice(-5);
       var command = "n" + customName;
-      rfduino.write(encoder.encode(command).buffer, function (){
+      rfduino.write(app.encodeString(command), function (){
         setTimeout(app.disconnectAndContinue, 500);
       }, app.onError);
     },
